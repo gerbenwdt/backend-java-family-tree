@@ -112,9 +112,9 @@ public class Person {
         parent.setChildren(childs);
 //        this.children.add(child);
     }
-//    public void addPet(){
-//
-//    }
+    public void addPet(Person person, Pet pet){
+        this.pets.add(pet);
+    }
     public void addSibling(Person person, Person sibling){
         this.siblings.add(sibling);
     }
