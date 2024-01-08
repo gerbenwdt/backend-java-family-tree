@@ -9,9 +9,10 @@ public class Person {
     private int age;
     private Person mother;
     private Person father;
-    private List<Person> siblings;
-    private List<Person> children;
-    private List<Pet> pets;
+    private List<Person> siblings = new ArrayList<Person>();
+    private List<Person> children = new ArrayList<Person>();
+    private List<Pet> pets = new ArrayList<Pet>();
+//    private Person partner;
 
     public Person(String name, String lastName, int age, String sex){
         this.name = name;
@@ -95,7 +96,7 @@ public class Person {
         this.pets = pets;
     }
 
-    public void addParents(Person father, Person mother, Person child) {
+    public void addParents(Person child, Person father, Person mother) {
         child.setMother(mother);
         child.setFather(father);
         mother.addChild(mother, child);
@@ -112,24 +113,36 @@ public class Person {
         parent.setChildren(childs);
 //        this.children.add(child);
     }
-    public void addPet(Person person, Pet pet){
+    public void addPet(Pet pet){
         this.pets.add(pet);
     }
-    public void addSibling(Person person, Person sibling){
+    public void addSibling(Person sibling){
         this.siblings.add(sibling);
     }
-    public List<Person> getGrandChildren(Person person){
+
+    public List<Person> getGrandChildren() {
         List<Person> grandChildren = new ArrayList<>();
-        if(person.getChildren() != null){
-            for (Person children : person.getChildren()){
-                if (children.getChildren() != null){
-                    for (Person grandChild : children.getChildren()){
-                        grandChildren.add(grandChild);
-                    }
-                }
+
+        for (Person child : children) {
+            for (Person grandChild : child.getChildren()) {
+                grandChildren.add(grandChild);
             }
         }
         return grandChildren;
     }
+
+//    public List<Person> getGrandChildren(Person person){
+//        List<Person> grandChildren = new ArrayList<>();
+//        if(person.getChildren() != null){
+//            for (Person children : person.getChildren()){
+//                if (children.getChildren() != null){
+//                    for (Person grandChild : children.getChildren()){
+//                        grandChildren.add(grandChild);
+//                    }
+//                }
+//            }
+//        }
+//        return grandChildren;
+//    }
 
 }

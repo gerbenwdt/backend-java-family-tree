@@ -1,53 +1,26 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersonTest {
+    Person testPerson;
+    Person testFather;
+    Person testMother;
+    Person testChild;
+    Person testGrandChild;
+    Pet testPet;
+    String expected;
 
-    @Test
-    void getName() {
-        Person person = new Person("TestKees","TestGraag",73,"Male");
-        String result = person.getName();
-        assertEquals("TestKees", result);
-    }
-
-    @Test
-    void getMiddleName() {
-        Person person = new Person("TestKees", "von", "TestGraag",73,"Male");
-        String result = person.getMiddleName();
-        assertEquals("von", result);
-    }
-
-    @Test
-    void getLastName() {
-        Person person = new Person("TestKees","TestGraag",73,"Male");
-        String result = person.getLastName();
-        assertEquals("TestGraag", result);
-    }
-
-    @Test
-    void getSex() {
-        Person person = new Person("TestKees","TestGraag",73,"Male");
-        String result = person.getSex();
-        assertEquals("Male", result);
-    }
-
-    @Test
-    void getAge() {
-        Person person = new Person("TestKees","TestGraag",73,"Male");
-        int result = person.getAge();
-        assertEquals(73, result);
-    }
-
-    @Test
-    void getMother() {
-        Person person = new Person("TestKees","TestGraag",73,"Male");
-        Person parent = new Person("TestParent", "TestParentsLastname", 98,"female");
-        person.setMother(parent);
-
-        Person mother = person.getMother();
-
-        assertEquals(mother,parent);
+    @BeforeEach
+    // Arrange
+    void setup(){
+        testPerson = new Person("Robin", "Berg", 23, "Male");
+        testFather = new Person("Kees", "Dalen", 54, "Male");
+        testMother = new Person("Miep", "Hopla",45,"Female");
+        testChild = new Person("Kiddo", "Familyname", 7, "Female");
+        testGrandChild = new Person("Jip", "GrandChild", 3, "Male");
+        testPet = new Pet("Mickey", 3, "Mouse");
     }
 
     @Test
@@ -62,63 +35,49 @@ class PersonTest {
     }
 
     @Test
-    void getSiblings() {
-
-    }
-
-    @Test
-    void getChildren() {
-    }
-
-    @Test
-    void getPets() {
-    }
-
-    @Test
-    void setSex() {
-    }
-
-    @Test
-    void setAge() {
-    }
-
-    @Test
-    void setMother() {
-    }
-
-    @Test
-    void setFather() {
-    }
-
-    @Test
-    void setSiblings() {
-    }
-
-    @Test
-    void setChildren() {
-    }
-
-    @Test
-    void setPets() {
-    }
-
-    @Test
     void addParents() {
+        // act
+        testPerson.addParents(testPerson, testFather, testMother);
+
+        // assert
+        assertEquals(testPerson.getFather(), testFather);
+        assertEquals(testPerson.getMother(), testMother);
     }
 
     @Test
     void addChild() {
+        testPerson.addChild(testPerson, testChild);
+
+        for (Person child : testPerson.getChildren()){
+            assertEquals(child, testChild);
+        }
     }
 
     @Test
     void addPet() {
+        testPerson.addPet(testPet);
+
+        for (Pet pets : testPerson.getPets()){
+            assertEquals(pets, testPet);
+        }
     }
 
     @Test
     void addSibling() {
+        testPerson.addSibling(testChild);
+
+        for (Person siblings : testPerson.getSiblings()){
+            assertEquals(siblings, testChild);
+        }
     }
 
     @Test
     void getGrandChildren() {
+        testPerson.addChild(testPerson,testChild);
+        testChild.addChild(testChild,testGrandChild);
+
+        for (Person grandChilds : testPerson.getGrandChildren()){
+            assertEquals(grandChilds, testGrandChild);
+        }
     }
 }
